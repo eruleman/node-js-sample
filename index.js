@@ -18,16 +18,26 @@ var conString = "pg://OutfitrDBUser:OutfitrDBPassword@outfitrdb.cdqciw4zlodp.us-
 var client = new pg.Client(conString);
 client.connect();
 
-client.query("CREATE TABLE IF NOT EXISTS emps(firstname varchar(64), lastname varchar(64))");
-client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Ronald', 'McDonald']);
-client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Mayor', 'McCheese']);
+// client.query("CREATE TABLE IF NOT EXISTS emps(firstname varchar(64), lastname varchar(64))");
+// client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Ronald', 'McDonald']);
+// client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Mayor', 'McCheese']);
 
-var query = client.query("SELECT firstname, lastname FROM emps ORDER BY lastname, firstname");
+client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser', 'testPassword', 'testFirstName', 'testLastName']);
+client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser2', 'testPassword2', 'testFirstName2', 'testLastName2']);
+var query = client.query("SELECT username, password, firstname, lastname FROM app_user ORDER BY lastname, firstname");
 query.on("row", function (row, result) {
-    result.addRow(row);
+  result.addRow(row);
 });
 query.on("end", function (result) {
-    console.log(JSON.stringify(result.rows, null, "    "));
-    client.end();
-});
+  console.log(JSON.stringify(result.rows, null, "   "));
+  client.end();
+})
+// var query = client.query("SELECT firstname, lastname FROM emps ORDER BY lastname, firstname");
+// query.on("row", function (row, result) {
+//     result.addRow(row);
+// });
+// query.on("end", function (result) {
+//     console.log(JSON.stringify(result.rows, null, "    "));
+//     client.end();
+// });
 
