@@ -2,11 +2,16 @@ var pg = require("pg");
 var express = require('express')
 var app = express();
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 8080))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
   response.send('Hello World!')
+})
+
+app.get('/callfunction', function(request, response) {
+  createUser('eruleman', 'fakePassword', 'Eric', 'Ruleman');
+  response.send('User Created!')
 })
 
 app.listen(app.get('port'), function() {
@@ -22,16 +27,18 @@ client.connect();
 // client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Ronald', 'McDonald']);
 // client.query("INSERT INTO emps(firstname, lastname) values($1, $2)", ['Mayor', 'McCheese']);
 
-client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser', 'testPassword', 'testFirstName', 'testLastName']);
-client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser2', 'testPassword2', 'testFirstName2', 'testLastName2']);
-var query = client.query("SELECT username, password, firstname, lastname FROM app_user ORDER BY lastname, firstname");
-query.on("row", function (row, result) {
-  result.addRow(row);
-});
-query.on("end", function (result) {
-  console.log(JSON.stringify(result.rows, null, "   "));
-  client.end();
-})
+function createUser(username, password, firstname, lastname) {
+  client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", [username, password, firstname, lastname]);
+  client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser3', 'testPassword3', 'testFirstName3', 'testLastName3']);
+  var query = client.query("SELECT username, password, firstname, lastname FROM app_user ORDER BY lastname, firstname");
+  query.on("row", function (row, result) {
+    result.addRow(row);
+  });
+  query.on("end", function (result) {
+    console.log(JSON.stringify(result.rows, null, "   "));
+    client.end();
+  })
+}
 // var query = client.query("SELECT firstname, lastname FROM emps ORDER BY lastname, firstname");
 // query.on("row", function (row, result) {
 //     result.addRow(row);
