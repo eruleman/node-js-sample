@@ -11,7 +11,7 @@ app.get('/', function(request, response) {
 
 app.get('/callfunction', function(request, response) {
   createUser('eruleman', 'fakePassword', 'Eric', 'Ruleman');
-  response.send('User Created! id: ' + req.query.id);
+  response.send('User Created! id: ' + request.query.id);
 })
 
 app.listen(app.get('port'), function() {
