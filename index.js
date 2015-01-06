@@ -15,6 +15,10 @@ app.get('/createuser', function(request, response) {
   ' firstname: ' + request.query.firstname + ' lastname: ' + request.query.lastname);
 })
 
+app.get('/get-next-top-id', function(request, response) {
+  response.send(Math.floor((Math.random() * 9)));
+})
+
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
 })
