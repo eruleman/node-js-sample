@@ -10,8 +10,9 @@ app.get('/', function(request, response) {
 })
 
 app.get('/callfunction', function(request, response) {
-  createUser('eruleman', 'fakePassword', 'Eric', 'Ruleman');
-  response.send('User Created! id: ' + request.query.id);
+  createUser(request.query.username, request.query.password, request.query.firstname, request.query.lastname);
+  response.send('User Created! username: ' + request.query.username + ' password: ' + request.query.password +
+  ' firstname: ' + request.query.firstname + ' lastname: ' + request.query.lastname);
 })
 
 app.listen(app.get('port'), function() {
