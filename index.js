@@ -30,7 +30,6 @@ client.connect();
 
 function createUser(username, password, firstname, lastname) {
   client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", [username, password, firstname, lastname]);
-  client.query("INSERT INTO app_user(username, password, firstname, lastname) values($1, $2, $3, $4)", ['testUser3', 'testPassword3', 'testFirstName3', 'testLastName3']);
   var query = client.query("SELECT username, password, firstname, lastname FROM app_user ORDER BY lastname, firstname");
   query.on("row", function (row, result) {
     result.addRow(row);
