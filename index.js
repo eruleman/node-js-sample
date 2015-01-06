@@ -16,7 +16,7 @@ app.get('/createuser', function(request, response) {
 })
 
 app.get('/get-next-top-id', function(request, response) {
-  response.send(Math.floor((Math.random() * 9)));
+  response.send("" + Math.floor((Math.random() * 9)));
 })
 
 app.listen(app.get('port'), function() {
